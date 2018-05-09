@@ -1,13 +1,43 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
       <dom-module id="my-element">
           <template>
-              hi
+              <template is="dom-repeat" items="[[myArray]]" as="todo">
+                  [[todo]]
+                  <br>
+              </template>
 
+              <paper-input id="paperInput" >
+              </paper-input>
+              <button id="addButton">Add task</button>
           </template>
+
           <script>
               class MyElement extends Polymer.Element{
                   static get is(){return 'my-element'};
+
+                  connectedCallback(){
+                      super.connectedCallback();
+                      this.$.addButton.addEventListener("click", ()=> {
+                          input = this.$.paperInput.value;
+                          console.log(input);
+                          this.push("myArray", input);
+                          this.$.paperInput.value = null;
+                      });
+                  }
+
+                  static get properties(){
+                      return {
+                          myArray: {
+                              type: Array,
+                              value: []
+                          }
+                      }
+                  }
               }
               window.customElements.define(MyElement.is, MyElement)
+              
+
+
           </script>
       </dom-module>
