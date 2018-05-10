@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="my-list.html">
+
+
+      <dom-module id="days-list">
+          
+            <link rel="import" type="css" href="buttons.css"/>
+          <template>
+            <div class="days_container">
+                    <div class="buttons_pos">
+                        <paper-button id="monday" class="custom green" toggles raised>Monday</paper-button><br>
+                        <paper-button id="tuesday"  class="custom green" toggles raised>Tuesday</paper-button><br>
+                        <paper-button id="wednesday" class="custom green" toggles raised>Wednesday</paper-button><br>
+                        <paper-button id="thursday" class="custom green" toggles raised>Thursday</paper-button><br>
+                        <paper-button id="friday" class="custom green" toggles raised>Friday</paper-button><br>
+                        <paper-button id="saturday" class="custom green" toggles raised>Saturday</paper-button><br>
+                        <paper-button id="sunday" class="custom green" toggles raised>Sunday</paper-button><br>
+                    </div>
+            </div>
+          </template>
+
+          <script>
+              class DaysList extends Polymer.Element{
+                  static get is(){return 'days-list'};      
+              }
+              window.customElements.define(DaysList.is, DaysList)
+
+          </script>
+      </dom-module>

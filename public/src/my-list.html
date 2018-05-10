@@ -1,0 +1,20 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+    
+<dom-module id="my-list">
+    <link rel="import" type="css" href="myList.css">
+    <template>
+        <div class="notice">
+            <div class="listTitle">Name's List</div>
+            <div class="addPhoto"><img id="addTask" src="../resources/img/add.png"/></div>
+            </a>
+        </div>
+    </template>
+
+    <script>
+        class MyList extends Polymer.Element {
+            static get is() {return 'my-list'};
+        }
+        window.customElements.define(MyList.is, MyList)
+    </script>
+    </dom-module>

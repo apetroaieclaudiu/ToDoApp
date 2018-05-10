@@ -1,14 +1,36 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../my-element.html">
+<link rel="import" href="../days-list.html">
+<link rel="import" href="../my-list.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+
 <dom-module id="todo-app">
+  <link rel="import" type="css" href="../myList.css">
   <template>
     <style>
       :host {
         display: block;
       }
+      
+      .list_container{
+        background-color: #9dbdcd;
+        width:75vh;
+      }
     </style>
-    <h2>Hello </h2>
-    <my-element></my-element>
+
+<firebase-app
+  auth-domain="todoapp-4c213.firebaseapp.com"
+  database-url="https://todoapp-4c213.firebaseio.com"
+  api-key="AIzaSyB5RuCvOkHhzq7RFmr5pcJOX0qF2iLEtzQ"
+  storage-bucket="todoapp-4c213.appspot.com"
+  messaging-sender-id="833738731172">
+</firebase-app>
+    <days-list></days-list>
+    <div class="list_container">
+      <my-list></my-list>
+    </div>
   </template>
 
   <script>
@@ -28,6 +50,6 @@
       }
     }
 
-    window.customElements.define(TodoApp.is, TodoApp);
+    window.customElements.define(TodoApp.is, TodoApp)
   </script>
 </dom-module>

@@ -3,7 +3,7 @@
       <dom-module id="my-element">
           <template>
               <template is="dom-repeat" items="[[myArray]]" as="todo">
-                  [[todo]]
+                  [[todo.name]] [[todo.day]] [[todo.dueTime]]
                   <br>
               </template>
 
@@ -19,10 +19,13 @@
                   connectedCallback(){
                       super.connectedCallback();
                       this.$.addButton.addEventListener("click", ()=> {
-                          input = this.$.paperInput.value;
-                          console.log(input);
+                          //
+                          this.selectTodoForDay("Monday");
+                          //
+                          const input = this.$.paperInput.value;
                           this.push("myArray", input);
                           this.$.paperInput.value = null;
+                          this.addTodo(input, "Monday", "Tue 13:00");
                       });
                   }
 
@@ -34,10 +37,26 @@
                           }
                       }
                   }
-              }
-              window.customElements.define(MyElement.is, MyElement)
-              
 
+                  removeTodo(id) {
+                      const path = "todos/" + id.toString();
+                      firebase.database().ref(path).remove();
+                  }
+
+                  addTodo(todoName, todoDay, todoDueTime) {
+                      firebase.database().ref("todos").push({name: todoName, day: todoDay, dueTime: todoDueTime});
+                  }
+
+                  selectTodoForDay(day) {
+                      firebase.database().ref("todos").orderByChild("day").equalTo(day).once("value", (snap)=>{
+                          snap.forEach((elem)=>{
+                                this.push("myArray", elem.val());
+                          })
+                      });
+                  }
+              }
+              window.customElements.define(MyElement.is, MyElement);
 
           </script>
+
       </dom-module>

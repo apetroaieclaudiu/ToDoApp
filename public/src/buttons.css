@@ -1,0 +1,60 @@
+  paper-button {
+      margin-bottom: 5px;
+      width:30vh;
+  }
+  .days_container {
+    background-color:#c27b7b;
+    left:0;
+    top:0;
+    float: left;
+    height: 100vh;
+    width: 25%;
+  }
+  .buttons_pos {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+  }
+
+  paper-button.custom {
+    --paper-button-ink-color: var(--paper-pink-a200);
+    --paper-button-flat-keyboard-focus: {
+      background-color: var(--paper-pink-a200);
+      color: white !important;
+    };
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+  paper-button.custom:hover {
+    background-color: var(--paper-indigo-100);
+  }
+  paper-button.pink {
+    color: var(--paper-pink-a200);
+
+  }
+  paper-button.indigo {
+    background-color: var(--paper-indigo-500);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+  paper-button.green {
+    background-color: #55cc86;
+    color: white;
+  }
+  paper-button.green[active] {
+    background-color: #ad374d;
+  }
+  paper-button.disabled {
+    color: white;
+  }
+
+  .list_container{
+      width:75vh;
+      background-color: #9dbdcd;
+  }

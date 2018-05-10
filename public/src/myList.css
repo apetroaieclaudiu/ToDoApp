@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+my-list {
+}
+
+.listTitle{
+    color: #c27b7b;
+    font-size: 50px;
+    position: relative;
+    right: 0%;
+    top: -40px;
+    font-family: 'Pacifico', cursive;
+    text-shadow: 2px 2px 2px rgba(2,9,13,0.75);
+}
+ img {
+     width: 5vh;
+     height: 5vh;
+ }
+
+ .addPhoto{
+     position:relative;
+     left: 95%;
+     top:-10%;
+ }
+.notice .listTitle {
+    text-align: center;
+}
+
+.notice {
+    background: #FFF 20px 50% no-repeat;
+    background: #FFF 20px 50% no-repeat;
+    border: 1px solid #adb0aa;
+    border-radius: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 60vw;
+    position:absolute;
+    right:7%;;
+    top:10%;
+    height:80vh;
+}
+
+.todo {
+    background: #FFF 20px 50% no-repeat;
+    background: #FFF 20px 50% no-repeat;
+    border: 1px solid #b6b6b6;
+    padding-left: 40px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.text-todo{
+    font-size: 20px;
+}
+
+
+.lightbox {
+	/** Default lightbox to hidden */
+	display: none;
+
+	/** Position and style */
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+}
+
+.lightbox img {
+	/** Pad the lightbox image */
+	max-width: 90%;
+	max-height: 80%;
+	margin-top: 2%;
+}
+
+.lightbox:target {
+	/** Remove default browser outline */
+	outline: none;
+
+	/** Unhide lightbox **/
+	display: block;
+}

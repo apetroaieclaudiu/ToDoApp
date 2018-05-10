@@ -1,0 +1,24 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+      <dom-module id="days">
+          <template>
+              
+<!--aici trec elementele pe care vreau sa le desenez-->
+            <paper-button id="monday">Monday</paper-button>
+            <paper-button id="tuesday">Tuesday</paper-button>
+            <paper-button id="wednesday">Wednesday</paper-button>
+            <paper-button id="thursday">Thursday</paper-button>
+            <paper-button id="friday">Friday</paper-button>
+            <paper-button id="saturday">Saturday</paper-button>
+            <paper-button id="sunday">Sunday</paper-button>
+          </template>
+
+          <script>
+              class Days extends Polymer.Element{
+                  static get is(){return 'days'};      
+              }
+              window.customElements.define(Days.is, Days)
+
+          </script>
+      </dom-module>
