@@ -22,7 +22,33 @@
 
           <script>
               class DaysList extends Polymer.Element{
-                  static get is(){return 'days-list'};      
+                  static get is(){return 'days-list'};
+                  connectedCallback(){
+                      super.connectedCallback();
+                      let curren_day = this.$.monday.textContent;
+                      this.$.monday.addEventListener("click", ()=> {
+                          curren_day = this.$.monday.textContent;
+                      });
+                      this.$.tuesday.addEventListener("click", ()=> {
+                            curren_day = this.$.tuesday.textContent;
+                      }); 
+                      this.$.wednesday.addEventListener("click", ()=> {
+                            curren_day = this.$.wednesday.textContent;
+                      }); 
+                      this.$.thursday.addEventListener("click", ()=> {
+                            curren_day = this.$.thursday.textContent;
+                      }); 
+                      this.$.friday.addEventListener("click", ()=> {
+                            curren_day = this.$.friday.textContent;
+                      }); 
+                      this.$.saturday.addEventListener("click", ()=> {
+                            curren_day = this.$.saturday.textContent;
+                      }); 
+                      this.$.sunday.addEventListener("click", ()=> {
+                            curren_day = this.$.sunday.textContent;
+                      }); 
+                       
+                    }
               }
               window.customElements.define(DaysList.is, DaysList)
 

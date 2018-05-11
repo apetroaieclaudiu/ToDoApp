@@ -1,20 +1,218 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="days-list.html">
+
 <dom-module id="my-list">
     <link rel="import" type="css" href="myList.css">
+    <link rel="import" type="css" href="buttons.css"/>
     <template>
+            <div class="login" id="logform">
+                <div class="wrapper">
+                    <form class="form-signin">       
+                      <h2 class="form-signin-heading">Please login</h2>
+                      <paper-input id="loginEmail" type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus=""></paper-input><br>
+                      <paper-input id="loginPassword" type="password" class="form-control" name="password" placeholder="Password" required=""></paper-input><br>
+                      <paper-button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit">Login</paper-button>   
+                      <paper-button id="signUpButton" class="btn btn-lg btn-primary btn-block">Sign Up</paper-button>
+                    </form>
+                  </div>
+           
+            </div>
+            <div class="days_container">
+                    <div class="buttons_pos">
+                        <paper-button id="monday" class="custom green" toggles raised>Monday</paper-button><br>
+                        <paper-button id="tuesday"  class="custom green" toggles raised>Tuesday</paper-button><br>
+                        <paper-button id="wednesday" class="custom green" toggles raised>Wednesday</paper-button><br>
+                        <paper-button id="thursday" class="custom green" toggles raised>Thursday</paper-button><br>
+                        <paper-button id="friday" class="custom green" toggles raised>Friday</paper-button><br>
+                        <paper-button id="saturday" class="custom green" toggles raised>Saturday</paper-button><br>
+                        <paper-button id="sunday" class="custom green" toggles raised>Sunday</paper-button><br>
+                    </div>
+            </div>
         <div class="notice">
             <div class="listTitle">Name's List</div>
+            <div class="selectedDay"><p id="selDay"></p></div>
             <div class="addPhoto"><img id="addTask" src="../resources/img/add.png"/></div>
+            <paper-input id="removeName"></paper-input>
+            <paper-button id="removeButton">Remove</paper-button>
             </a>
+            <template id="tasks" is="dom-repeat" items="[[myArray]]" as="todo">
+                    <div class="taskName">[[todo.name]]</div><paper-checkbox class="checkTask"></paper-checkbox><div class="taskDate">[[todo.dueTime]]</div>
+                    <hr>
+                    
+            </template>
+            <div class="addForm" id="taskForm">
+                    <paper-input id="taskName" placeholder="Task" style="padding-top: 35vh;"></paper-input><br>
+                    <paper-input id="taskDueDate" placeholder="Due Date"></paper-input><br>
+                    <paper-button id="taskSubmit" class="custom green" toggles raised>Submit</paper-button>
+                    <paper-button id="taskCancel" class="custom green" toggles raised>Cancel</paper-button>
+            </div>
         </div>
+        
     </template>
-
+    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB5RuCvOkHhzq7RFmr5pcJOX0qF2iLEtzQ",
+        authDomain: "todoapp-4c213.firebaseapp.com",
+        databaseURL: "https://todoapp-4c213.firebaseio.com",
+        projectId: "todoapp-4c213",
+        storageBucket: "todoapp-4c213.appspot.com",
+        messagingSenderId: "833738731172"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script>
         class MyList extends Polymer.Element {
             static get is() {return 'my-list'};
+            static get properties(){
+                      return {
+                          myArray: {
+                              type: Array,
+                              value: []
+                          }
+                      }
+                  }
+            connectedCallback(){
+                      super.connectedCallback();
+                      let curren_day = this.$.monday.textContent;
+                      this.selectTodoForDay(curren_day);
+                      firebase.auth().onAuthStateChanged((user) => {
+                          if(user) {
+                            this.$.logform.classList.add('addForm');
+                            console.log('logged in');
+                          }
+                          else {
+                            this.$.logform.classList.remove('addForm');
+
+                            console.log('not logged in');
+                          }
+                      });
+                      this.$.selDay.textContent = curren_day;
+                      this.$.monday.addEventListener("click", ()=> {
+                            this.clearTodo(curren_day);
+                            console.log(this.$.myArray);
+                            curren_day = this.$.monday.textContent;
+                            this.$.selDay.textContent = curren_day;
+                          this.selectTodoForDay(curren_day);
+                      });
+                      this.$.tuesday.addEventListener("click", ()=> {
+                        this.clearTodo(curren_day);
+                            curren_day = this.$.tuesday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.wednesday.addEventListener("click", ()=> {
+                        this.clearTodo(curren_day);
+                            curren_day = this.$.wednesday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.thursday.addEventListener("click", ()=> {
+                        this.clearTodo(curren_day);
+                            curren_day = this.$.thursday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.friday.addEventListener("click", ()=> {
+                        this.clearTodo(curren_day);
+                            curren_day = this.$.friday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.saturday.addEventListener("click", ()=> {
+                             this.clearTodo(curren_day);
+                            curren_day = this.$.saturday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.sunday.addEventListener("click", ()=> {
+                            this.clearTodo(curren_day);
+                            curren_day = this.$.sunday.textContent;
+                            
+                            this.$.selDay.textContent = curren_day;
+                            
+                            this.selectTodoForDay(curren_day);
+                      }); 
+                      this.$.addTask.addEventListener("click", ()=> {
+                          this.$.taskForm.classList.add('popUpForm')
+                      });
+                      this.$.taskSubmit.addEventListener("click", ()=> {
+                          const input = this.$.taskName.value;
+                          const input1 = this.$.taskDueDate.value;
+
+                          this.addTodo(input, curren_day, input1);
+                          this.$.taskForm.classList.remove('popUpForm')
+                      });   
+                      this.$.taskCancel.addEventListener("click", ()=> {
+                          this.$.taskForm.classList.remove('popUpForm')
+                      });
+
+                      this.$.loginButton.addEventListener("click", ()=> {
+                          const email = this.$.loginEmail.value;
+                          const password = this.$.loginPassword.value;
+                          firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+                            window.alert('login failed');
+                          });
+                      });
+                      
+                      this.$.signUpButton.addEventListener("click", ()=> {
+                          const email = this.$.loginEmail.value;
+                          const password = this.$.loginPassword.value;
+                          firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+                            window.alert('Sign up failed');
+                          });
+                      });
+                      this.$.removeButton.addEventListener("click", ()=>{
+                        this.removeTodo(this.$.removeName.value);
+                      });
+                    
+                }
+                
+                      removeTodo(name) {
+
+                          var ref = firebase.database().ref("todos");
+                          ref.orderByChild("name").equalTo(name).on('child_added', (snapshot) => {
+                              snapshot.ref.remove();
+                          });
+
+                      firebase.database().ref("todos").orderByChild("name").equalTo(name).once("value", (snap)=>{
+                          snap.forEach((elem)=>{
+                            this.pop("myArray");
+                          })
+                      });
+                    }
+                  addTodo(todoName, todoDay, todoDueTime) {
+                      firebase.database().ref("todos").push({name: todoName, day: todoDay, dueTime: todoDueTime});
+                      firebase.database().ref("todos").orderByChild("name").equalTo(todoName).once("value", (snap)=>{
+                          snap.forEach((elem)=>{
+                            this.push("myArray", elem.val());
+                          })
+                      });
+                  }
+
+                  selectTodoForDay(day) {
+                      firebase.database().ref("todos").orderByChild("day").equalTo(day).once("value", (snap)=>{
+                          snap.forEach((elem)=>{
+                            this.push("myArray", elem.val());
+                          })
+                      });
+                  }
+                  clearTodo(day) {
+                    this.set("myArray", []);
+                  }
+
         }
+
+
         window.customElements.define(MyList.is, MyList)
     </script>
     </dom-module>

@@ -20,7 +20,7 @@ my-list {
  .addPhoto{
      position:relative;
      left: 95%;
-     top:-10%;
+     top:-25%;
  }
 .notice .listTitle {
     text-align: center;
@@ -81,3 +81,110 @@ my-list {
 	/** Unhide lightbox **/
 	display: block;
 }
+
+.addForm {
+    display:none;
+}
+
+.popUpForm {	
+    outline: none;
+	display: block;
+    position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+    left: 0;
+    color: black;
+	background: rgba(255,255,255,0.8);
+}
+
+.taskName {
+    font-family: Roboto;
+    font-size: 18px;
+    padding-left:10vw;
+}
+
+.taskDate {
+    font-family: Roboto;
+    font-size: 14px;
+    padding-left: 40vw;
+}
+
+.selectedDay {
+    position:relative;
+    top:0;
+    font-size:30px;
+    padding:0;
+    padding-left:26vw;
+    margin:0;
+    width:auto;
+    color: rgb(255, 255, 255);
+    background-color: rgb(153, 109, 109);
+    text-shadow: rgb(71, 71, 71) 3px 5px 2px;
+}
+
+hr {
+    padding:0;
+    margin:0;
+}
+
+.checkTask {
+    padding-left: 55vw;
+}
+
+.login {
+    outline: none;
+	display: none;
+    position: fixed;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background-color: #8aace2;
+    text-align: center;
+}
+
+@import "bourbon";
+@import url('https://fonts.googleapis.com/css?family=Rambla');
+
+.wrapper {	
+    margin-top: 80px;
+    margin-bottom: 80px;
+    font-family: 'Rambla', sans-serif;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);  
+}
+
+    .form-signin .form-signin-heading, .checkbox {
+	  margin-bottom: 30px;
+	}
+
+    .form-signin .checkbox {
+	  font-weight: normal;
+	}
+
+	.form-signin .form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+	}
+
+	input[type="text"] {
+	  margin-bottom: -1px;
+	  border-bottom-left-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+
+	input[type="password"] {
+	  margin-bottom: 20px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
