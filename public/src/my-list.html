@@ -34,12 +34,12 @@
                     </div>
             </div>
         <div class="notice">
-            <div class="listTitle">Name's List</div>
+            <div class="listTitle">To Do List</div>
             <div class="selectedDay"><p id="selDay"></p></div>
             <div class="addPhoto"><img id="addTask" src="../resources/img/add.png"/></div>
-            <paper-input id="removeName"></paper-input>
-            <paper-button id="removeButton">Remove</paper-button>
-            <paper-button id="signOut">signOut</paper-button>
+            <paper-input id="removeName" placeholder="Remove task name"></paper-input>
+            <paper-button id="removeButton" >Remove</paper-button>
+            <paper-button id="signOut" style="position:absolute; top:0; right:0;">signOut</paper-button>
             </a>
             <template id="tasks" is="dom-repeat" items="[[myArray]]" as="todo">
                     <div class="taskName">[[todo.name]]</div><paper-checkbox class="checkTask"></paper-checkbox><div class="taskDate">[[todo.dueTime]]</div>
@@ -166,15 +166,10 @@
                           const email = this.$.loginEmail.value;
                           const password = this.$.loginPassword.value;
                           firebase.auth().createUserWithEmailAndPassword(email, password);
+                          firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+                            this.$.logform.classList.add('login-delete');
+                          });
                           var user = firebase.auth().currentUser;
-
-                        
-if (user) {
-  // User is signed in.
-                this.$.logform.classList.add('login');
-  
-} else {
-  this.$.logform.classList.add('login-delete');}
                       });
                       this.$.removeButton.addEventListener("click", ()=>{
                         this.removeTodo(this.$.removeName.value);
