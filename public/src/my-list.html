@@ -2,11 +2,14 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="days-list.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+
 
 <dom-module id="my-list">
     <link rel="import" type="css" href="myList.css">
     <link rel="import" type="css" href="buttons.css"/>
     <template>
+            <firebase-auth user="{{myU}}" on-user-changed="userChange"></firebase-auth>
             <div class="login" id="logform">
                 <div class="wrapper">
                     <form class="form-signin">       
@@ -36,6 +39,7 @@
             <div class="addPhoto"><img id="addTask" src="../resources/img/add.png"/></div>
             <paper-input id="removeName"></paper-input>
             <paper-button id="removeButton">Remove</paper-button>
+            <paper-button id="signOut">signOut</paper-button>
             </a>
             <template id="tasks" is="dom-repeat" items="[[myArray]]" as="todo">
                     <div class="taskName">[[todo.name]]</div><paper-checkbox class="checkTask"></paper-checkbox><div class="taskDate">[[todo.dueTime]]</div>
@@ -51,19 +55,7 @@
         </div>
         
     </template>
-    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyB5RuCvOkHhzq7RFmr5pcJOX0qF2iLEtzQ",
-        authDomain: "todoapp-4c213.firebaseapp.com",
-        databaseURL: "https://todoapp-4c213.firebaseio.com",
-        projectId: "todoapp-4c213",
-        storageBucket: "todoapp-4c213.appspot.com",
-        messagingSenderId: "833738731172"
-      };
-      firebase.initializeApp(config);
-    </script>
+
     <script>
         class MyList extends Polymer.Element {
             static get is() {return 'my-list'};
@@ -78,18 +70,9 @@
             connectedCallback(){
                       super.connectedCallback();
                       let curren_day = this.$.monday.textContent;
+                      var ok = true;
                       this.selectTodoForDay(curren_day);
-                      firebase.auth().onAuthStateChanged((user) => {
-                          if(user) {
-                            this.$.logform.classList.add('addForm');
-                            console.log('logged in');
-                          }
-                          else {
-                            this.$.logform.classList.remove('addForm');
-
-                            console.log('not logged in');
-                          }
-                      });
+                     
                       this.$.selDay.textContent = curren_day;
                       this.$.monday.addEventListener("click", ()=> {
                             this.clearTodo(curren_day);
@@ -150,33 +133,66 @@
                           const input1 = this.$.taskDueDate.value;
 
                           this.addTodo(input, curren_day, input1);
+                          this.$.taskName.value = null;
+                          this.$.taskDueDate.value = null;
                           this.$.taskForm.classList.remove('popUpForm')
                       });   
                       this.$.taskCancel.addEventListener("click", ()=> {
                           this.$.taskForm.classList.remove('popUpForm')
+                          
+                          this.$.taskName.value = null;
+                          this.$.taskDueDate.value = null;
                       });
 
                       this.$.loginButton.addEventListener("click", ()=> {
+                          
                           const email = this.$.loginEmail.value;
                           const password = this.$.loginPassword.value;
-                          firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
-                            window.alert('login failed');
+                          firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
+                            this.$.logform.classList.add('login-delete');
                           });
+                          var user = firebase.auth().currentUser;
+
+                      });
+
+                      this.$.signOut.addEventListener("click", ()=> {
+                          firebase.auth().signOut();
+                          location.reload();
                       });
                       
+                     
                       this.$.signUpButton.addEventListener("click", ()=> {
+                         
                           const email = this.$.loginEmail.value;
                           const password = this.$.loginPassword.value;
-                          firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-                            window.alert('Sign up failed');
-                          });
+                          firebase.auth().createUserWithEmailAndPassword(email, password);
+                          var user = firebase.auth().currentUser;
+
+                        
+if (user) {
+  // User is signed in.
+                this.$.logform.classList.add('login');
+  
+} else {
+  this.$.logform.classList.add('login-delete');}
                       });
                       this.$.removeButton.addEventListener("click", ()=>{
                         this.removeTodo(this.$.removeName.value);
                       });
                     
                 }
-                
+                    userChange(user) {
+
+                        console.log(user);
+                        if (user.detail.value) {
+  // User is signed in.
+                                this.$.logform.classList.add('login-delete');
+                            
+                            } else {
+                                this.$.logform.classList.add('login');
+                            }
+                      }
+
                       removeTodo(name) {
 
                           var ref = firebase.database().ref("todos");

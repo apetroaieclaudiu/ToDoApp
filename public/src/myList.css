@@ -136,6 +136,17 @@ hr {
 
 .login {
     outline: none;
+	display: block;
+    position: fixed;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background-color: #8aace2;
+    text-align: center;
+}
+
+.login-delete {
+    outline: none;
 	display: none;
     position: fixed;
     z-index: 999;
@@ -144,6 +155,8 @@ hr {
     background-color: #8aace2;
     text-align: center;
 }
+
+
 
 @import "bourbon";
 @import url('https://fonts.googleapis.com/css?family=Rambla');
