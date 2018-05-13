@@ -39,7 +39,7 @@
             <div class="addPhoto"><img id="addTask" src="../resources/img/add.png"/></div>
             <paper-input id="removeName" placeholder="Remove task name"></paper-input>
             <paper-button id="removeButton" >Remove</paper-button>
-            <paper-button id="signOut" style="position:absolute; top:0; right:0;">signOut</paper-button>
+            <paper-button id="signOut" style="position:absolute; top:0; right:5vw;">signOut</paper-button>
             </a>
             <template id="tasks" is="dom-repeat" items="[[myArray]]" as="todo">
                     <div class="taskName">[[todo.name]]</div><paper-checkbox class="checkTask"></paper-checkbox><div class="taskDate">[[todo.dueTime]]</div>
@@ -173,6 +173,9 @@
                       });
                       this.$.removeButton.addEventListener("click", ()=>{
                         this.removeTodo(this.$.removeName.value);
+                        this.$.removeName.value = null;
+                        this.clearTodo(curren_day);
+                        this.selectTodoForDay(curren_day);
                       });
                     
                 }
